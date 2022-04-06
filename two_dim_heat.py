@@ -10,8 +10,11 @@ def sample_node(bd_node, int_node):
     bdp = np.stack((np.cos(bd_angle), np.sin(bd_angle))).T
     int_angle = np.random.rand(int_node)*2*np.pi
     int_radius = np.sqrt(np.random.rand(int_node))
-    intp = np.stack((int_radius*np.cos(int_angle), int_radius*np.sin(int_angle))).T
-    return np.concatenate((bdp, intp))[:-10,:], np.concatenate((bd_angle, int_angle))[:-10], np.concatenate((np.ones(num_bd_nodes), int_radius))[:-10]
+    intp = np.stack((int_radius*np.cos(int_angle), \
+        int_radius*np.sin(int_angle))).T
+    return np.concatenate((bdp, intp))[:-10,:],\
+         np.concatenate((bd_angle, int_angle))[:-10],\
+             np.concatenate((np.ones(num_bd_nodes), int_radius))[:-10]
 
 
 def gen_A(nodes, tri):
@@ -82,7 +85,8 @@ if __name__=="__main__":
     # Interpolate to regularly-spaced quad grid.
     xi, yi = np.meshgrid(np.linspace(-1, 1, 100), np.linspace(-1, 1, 100))
     z = np.concatenate((bd_vec[:,0],solution))
-    theoretical_solution = 50+(200/np.pi)*sum((1/(2*m+1))*rs**(m+1)*np.sin((2*m+1)*thetas) for m in range(4000))
+    theoretical_solution = 50+(200/np.pi)*sum((1/(2*m+1))*rs**(m+1)*\
+        np.sin((2*m+1)*thetas) for m in range(4000))
 
     # Set up the figure
     fig, axs = plt.subplots(nrows=1, ncols=2, figsize=(10, 4))
